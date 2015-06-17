@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         'uglify': {
         	minified :{
         		files: {
-        			'js/mini/sript.js' : [  'js/src/*.js' ]
+        			'js/mini/script.js' : [  'js/src/*.js' ]
         		}
         	}
         },
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
         'concat' : {
         	debug :{
         		files: {
-        			'js/debug/sript.js' : [  'js/src/*.js' ]
+        			'js/debug/script.js' : [  'js/src/*.js' ]
         		}
         	}
         },
