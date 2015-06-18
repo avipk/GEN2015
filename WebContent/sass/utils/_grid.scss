@@ -1,0 +1,139 @@
+@import "functions";
+@import "mixins";
+
+/*------------------------------------------------------*/
+
+.every-col {
+  float: $default-dir;
+  &.test {
+	border: 1px dashed $gray;
+	text-align: center;
+	padding:10px;
+  }
+}
+
+$media-map: 's','m','l';
+
+@mixin produce_col($col,$gutter,$grid_base) {
+
+  @for $i from 1 through $grid_base {
+	.c#{$i} {
+	  @extend .every-col;
+	  padding-left: $gutter / 2;
+	  padding-right: $gutter / 2;
+	  width: ($col * $i);
+	}
+  }
+
+  .#{$p}-mc {
+	&.p_t {
+	  .c3s-pt {
+		@extend .special3
+	  }
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-pt {
+		  @extend .every-col;
+			padding-left: $gutter / 2 !important;;
+			padding-right: $gutter / 2 !important;;
+			width: ($col * $i) !important;;
+
+		}
+	  }
+	}
+	&.p_s {
+	  .c3s-ps {
+		@extend .special3
+	  }
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-ps {
+		  @extend .every-col;
+		  padding-left: $gutter / 2 !important;;
+		  padding-right: $gutter / 2 !important;;
+		  width: ($col * $i) !important;;
+
+		}
+	  }
+	}
+	&.p_m {
+	  .c3s-pm {
+		@extend .special3
+	  }
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-pm {
+		  @extend .every-col;
+		  padding-left: $gutter / 2 !important;;
+		  padding-right: $gutter / 2 !important;;
+		  width: ($col * $i) !important;;
+
+		}
+	  }
+	}
+	&.p_l {
+	  .c3s-pl {
+		@extend .special3
+	  }
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-pl {
+		  @extend .every-col;
+		  padding-left: $gutter / 2 !important;;
+		  padding-right: $gutter / 2 !important;;
+		  width: ($col * $i) !important;;
+		}
+	  }
+	}
+	&.p_x {
+	  .c3s-px {
+		@extend .special3
+	  }
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-px {
+		  @extend .every-col;
+		  padding-left: $gutter / 2 !important;;
+		  padding-right: $gutter / 2 !important;;
+		  width: ($col * $i) !important;;
+
+		}
+	  }
+	}
+
+
+
+
+  }
+
+
+  .#{$p}-mc.p_m, .#{$p}-mc.p_l, .#{$p}-mc.p_x  {
+	.row {
+	  margin-left: -#{$gutter / 2};
+	  margin-right: -#{$gutter / 2};
+	}
+  }
+
+  .#{$p}-mc.p_t, .#{$p}-mc.p_s {
+	.row {
+		margin-left: 0 !important;
+	  	margin-right: 0 !important;
+	  	padding: 0 15px;
+	  }
+  }
+}
+
+.#{$p}-mc {
+  .row {
+	//overflow: hidden;
+  }
+}
+/*------------------------------------------------------*/
+
+$grid_base: 10;
+$gutter: 20px;
+$col: 100% / $grid_base;
+
+.special3 {
+  @extend .every-col;
+  padding-left: $gutter / 2 !important;;
+  padding-right: $gutter / 2 !important;;
+  width: 33.333%;
+}
+
+@include produce_col($col,$gutter,$grid_base);

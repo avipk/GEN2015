@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GEN 2015 - Haartetz</title>
+	
+	<link type="text/css" rel="stylesheet" href="css/screen.css">
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?v=3.2&libraries=visualization"></script>
+</head>
+
+<body>
+	<div class="widget">		
+		<div class="widget__view">			
+			<div class="overlay-box ob--left" id="commuters-search-form" style="display:none;">
+				<form>
+					<label>Starting point :
+						<input type="text" class="field" value="Petach Tikva" id="txtCommuterFrom" name="txtCommuterFrom"/>
+					</label>
+					<label>Destination :
+						<input type="text" class="field" value="Herzliya" id="txtCommuterTo" name="txtCommuterTo"/>
+					</label>
+					<label>Departure time :						
+						<input type="time" class="field" value="07:00" id="txtCommuterTime" name="txtCommuterTime" min="00:00" max="23:59"/>
+					</label>
+					<button type="button" class="js-commuter-search">Search</button>
+				</form>
+			</div>
+			<div class="toolbar">
+				<button type="button" class="js-heatmap-toggle btn--toolbar">Toggle Heatmap</button>				
+				<button class="btn--toolbar btn--emission" type="button">Emission</button>
+				<button class="btn--toolbar btn--factory" type="button">Factories</button>
+				<button class="btn--toolbar btn--garbage" type="button">Garbage</button>
+			</div>
+			
+			<div class="toolbar">
+				<button type="button" class="js-car-pool-toggle btn--toolbar">Toggle Car pooling</button>
+				<button type="button" class="js-bus-pool-toggle btn--toolbar">Toggle Bus pooling</button>
+				<button type="button" class="js-commuter-search-toggle btn--toolbar">Toggle commuters search</button>
+			</div>
+			
+			<div class="actionmenu">
+				<div class="actionmenu__menu"></div>
+			</div>
+			
+			
+			<div class="widget__viewport">
+				<div class="widget__map"></div>
+			</div>
+		</div>
+		
+		<div class="side"></div>
+	</div>
+	<script type="text/template" id="vehicle-info-template">
+		<div>
+			Id: {content.id} <br/>
+			Type: {content.type.name} - {content.model}<br/>
+			Polution: {content.polution} CO2 e<br/>
+			Distance: 12 Km<br/>
+			Passengers in Vehicle: {content.passengers}<br/>
+			Total sits: {content.type.sits}
+		</div>
+	</script>
+	
+	<script type="text/template" id="vehicle-carpolling-info-template">
+		<div>			
+			Passengers: {content.passengers}<br/>
+			Total sits: {content.type.sits}
+		</div>
+	</script>
+	<script src="js/debug/script.js"></script>
+</body>
+</html>

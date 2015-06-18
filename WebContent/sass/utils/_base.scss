@@ -1,0 +1,70 @@
+// -------------------------------------------------
+//
+//  Settings & Variables
+//
+// -------------------------------------------------
+
+$main-container-width: 100%;
+$gen-padding: 0 15px 0 15px;
+$gen-margin: 15px;
+
+// -------------------------------------
+//   $Name Space
+// -------------------------------------
+
+$p: "gridd";
+
+// -------------------------------------
+//   $DOMAINS
+// -------------------------------------
+
+$htzheb: "http://www.haaretz.co.il/";
+$htzeng: "http://www.haarerz.com/";
+$tm: "http://www.themarker.com/";
+
+// -------------------------------------
+//   $COLORS
+// -------------------------------------
+
+// Haaretz.co.il
+$haaretz-dark: rgb(6, 113, 148);
+$haaretz-blue: rgb(9, 165, 217);
+$haaretz-top-bar: rgb(74, 190, 228);
+$haaretz-hover: rgb(121, 201, 228);
+$haaretz-bg: rgb(214, 235, 242);
+
+// TheMarker.com
+$marker-dark: rgb(8, 84, 62);
+$marker-brand: rgb(96, 199, 0);
+$marker-brand-light: rgb(178, 229, 129);
+
+// Haaretz.com
+$english-red: rgb(218, 80, 7);
+$english-cream-dark: rgb(215, 213, 190);
+$english-cream-light: rgb(229, 227, 212);
+$english-gray: rgb(239,239,239);
+
+// Sales
+$sales: rgb(250, 100, 0);
+
+// UI
+$red:             rgb(233, 33, 52)!default;
+$green:           rgb(74, 153, 62)!default;
+
+// Social
+$facebook-color: rgb(58, 87, 149);
+$twitter-color: rgb(21, 193, 225);
+$gplus-color: rgb(194, 10, 8);
+
+// GrayScale
+$text-color: rgb(34, 34, 34)!default;
+$darkest-gray:    rgb(34, 34, 34)!default;
+$darker-gray:     rgb(44, 44, 44)!default;
+$dark-gray:       rgb(53, 53, 53)!default;
+$gray:            rgb(90, 90, 90)!default;
+$light-gray:      rgb(178, 178, 178)!default;
+$lighter-gray:    rgb(204, 204, 204)!default;
+$very-light-gray: rgb(243, 243, 243)!default;
+$lightest-gray:   rgb(245, 245, 240)!default;
+$white:           #fff;
+

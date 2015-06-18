@@ -1,0 +1,40 @@
+@import "base";
+
+// -------------------------------------
+//   Set Domain Specifics
+// -------------------------------------
+
+@function setDomain($domain) {
+  @if $domain == "heb" {
+	$main-font: "open sans hebrew";
+	$main-color: $haaretz-blue;
+	$default-dir: right;
+	$opposite-dir: left;
+	$default-flow: rtl;
+	$opposite-flow: ltr;
+	@return $main-color,$default-dir,$opposite-dir,$default-flow,$opposite-flow,$main-font;
+  }
+  @else if $domain == "eng" {
+	$main-font: Georgia;
+	@debug "english";
+	$main-color: $english-red;
+	$default-dir: left;
+	$opposite-dir: right;
+	$default-flow: ltr;
+	$opposite-flow: rtl;
+	@return $main-color,$default-dir,$opposite-dir,$default-flow,$opposite-flow,$main-font;
+  }
+  @else if $domain == "tm" {
+	$main-font: "open sans hebrew";
+	$main-color: $marker-brand;
+	$default-dir: right;
+	$opposite-dir: left;
+	$default-flow: rtl;
+	$opposite-flow: ltr;
+	@return $main-color,$default-dir,$opposite-dir,$default-flow,$opposite-flow,$main-font;
+  } @else {
+	@debug "Domain was not initialized"
+  }
+}
+
+

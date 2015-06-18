@@ -1,42 +1,123 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>GEN 2015 - Haartetz</title>
-	
-	<link type="text/css" rel="stylesheet" href="css/screen.css">
+<!-- build:template /build -->
+<!-- build:remove:desk,polo -->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?v=3.2&libraries=visualization"></script>
-</head>
+	<script src="//use.typekit.net/kqn1twu.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
 
-<body>
-	<div class="widget">
-		<div class="widget__view">			
-			<div class="toolbar">
-				<button type="button" class="widget__heatmap-toggle btn--toolbar">Toggle Heatmap</button>
-				<button class="btn--toolbar btn--emission" type="button">Emission</button>
-				<button class="btn--toolbar btn--factory" type="button">Factories</button>
-				<button class="btn--toolbar btn--garbage" type="button">Garbage</button>
-			</div>
-			<div class="actionmenu">
-				<div class="actionmenu__menu"></div>
-			</div>
+	<link type="text/css" rel="stylesheet" href="css/styles_eng.css"/>
+</head>
+<body style="padding:0;margin:0;font-family: ad">
+
+	<img class="centerme" src="images/top_bar.jpg"/>
+	<img class="centerme topbanner" src="images/top_banner.jpg"/>
+	<img class="centerme belowbanner" src="images/below-banner.jpg">
+	
+	
+	<!-- Widget starts Here -->
+	
+	<div class="widget__map js-widget">
+		<div class="js-widget-map map-fullsize"></div>
+		
+		<div id="commuters-search-form" class="js-on-my-way fake-obj onmyway js-commuter-search">
+			<img src="images/onmyway.png"/>
+		</div>
+		
+		<div id="select_number" class="fake-obj select_number">
+			<img src="images/select_number.png"/>
+		</div>	
 			
-			
-			<div class="widget__viewport">
-				<div class="widget__map"></div>
+		
+		<div class="fake-obj share_message">
+			<img src="images/share_message.png"/>
+		</div>		
+		
+		<div class="fake-obj game-result">
+			<img src="images/newp.png"/>
+		</div>	
+		
+		<div class="menu">
+			<button type="button" class="menu_butt">
+				<img src="images/iconworks.png"/>
+				<div class="menu_butt__label">How It Works</div>
+			</button>
+			<button type="button" class="menu_butt">
+				<img src="images/emmision_icon.png"/>
+				<div class="menu_butt__label js-heatmap-toggle">Emmision Heatmap</div>
+			</button>
+			<div id="rebreath-menu" class="horizontal-menu">
+				<button type="button" class="menu_butt js-toggle-rebreath-menu">
+					<img src="images/rebreathe.png"/>
+					<div class="menu_butt__label">ReBreath</div>
+				</button>
+				<div class="horizontal-menu__submenu">
+					<button type="button" class="menu_butt">
+						<img src="images/share.png"/>
+					</button>
+					
+					<button type="button" class="menu_butt js-commuter-search-toggle">
+						<img src="images/Search.png"/>
+					</button>
+				</div>
+			</div>
+			<div id="simulate-menu" class="horizontal-menu">
+				<button type="button" class="menu_butt js-toggle-simulate-menu">
+					<img src="images/simulate.png"/>
+					<div class="menu_butt__label">Simulate</div>
+				</button>
+				<div class="horizontal-menu__submenu">
+									
+					<button type="button" class="menu_butt js-bus-pool-toggle">
+						<img src="images/buspoolit.png"/>
+					</button>
+					
+					<button type="button" class="menu_butt js-car-pool-toggle">
+						<img src="images/carpoolit.png"/>
+					</button>
+				</div>
 			</div>
 		</div>
 		
-		<div class="side"></div>
+		
+		
+		<div class="related">
+			<div class="header">Related Articles</div>
+			<div class="closeit">x</div>
+			<div class="articlecontainer">
+				<img src="images/article1.png"/>
+				<img src="images/article2.png"/>
+				<img src="images/article3.png"/>
+			</div>
+		</div>		
 	</div>
+	
+	<!-- Widget ends Here -->
+	
+	<div class="articlesection">
+		<div class="centerfeed"></div>
+		<div class="sidearticles"></div>
+	</div>
+	
 	<script type="text/template" id="vehicle-info-template">
 		<div>
-			Type: {content.type} - {content.model}<br/>
+			Id: {content.id} <br/>
+			Type: {content.type.name} - {content.model}<br/>
 			Polution: {content.polution} CO2 e<br/>
 			Distance: 12 Km<br/>
 			Passengers in Vehicle: {content.passengers}<br/>
-			Total sits: {content.sits}
+			Total sits: {content.type.sits}
+		</div>
+	</script>
+	
+	<script type="text/template" id="vehicle-carpolling-info-template">
+		<div>			
+			Passengers: {content.passengers}<br/>
+			Total sits: {content.type.sits}
 		</div>
 	</script>
 	<script src="js/debug/script.js"></script>

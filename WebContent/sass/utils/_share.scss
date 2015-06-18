@@ -1,0 +1,21 @@
+// --------------------------------------------------
+//
+// --------------------------------------------------
+
+.#{$p}-share {
+  text-align: $default-dir;
+  font-size: 32px;
+  button {
+	cursor:pointer;
+	margin-#{$default-dir}: $gen-margin;
+	font-family: "htzIcons";
+	font-weight:400;
+	color: $main-color;
+	&:hover {
+	  color: $gray;
+	}
+	&:first-child {
+	  margin-#{$default-dir}: 0;
+	}
+  }
+}

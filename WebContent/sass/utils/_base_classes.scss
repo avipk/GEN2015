@@ -1,0 +1,86 @@
+// --------------------------------------------------
+//   Internet Explorer Arial Fallback from openSans
+// --------------------------------------------------
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body, .#{$p}-mc {
+	font-family: Arial !important;
+  }
+}
+
+
+
+
+.#{$p}-transition {
+  transition: all 0.15s ease-in-out;
+}
+.#{$p}-cl {
+  @extend .#{$p}-transition;
+  cursor:pointer;
+  direction:ltr !important;
+  span {
+	border-bottom: 1px dashed #000;
+	margin-bottom:20px;
+	display:inline-block;
+  }
+  max-height:500px;
+  overflow:auto;
+  padding:20px;
+  font-family:monospace;
+  text-align: left;
+  font-size:16px;
+  position: fixed;
+  z-index:99999;
+  bottom:0;
+  color:#000;
+  background: rgba(239, 255, 36, 0.50);
+  &.hide {
+	background:rgba(0,0,0,1);
+	padding:0;
+	max-height:20px;
+	width:20px;
+	overflow: hidden;
+  }
+}
+.#{$p}-boxShadow {
+  @include prefix((box-shadow: 0 0 7px #5a5a5a),web moz o ms);
+}
+.#{$p}-textShadow {
+  @include prefix((text-shadow: 0 0 7px #5a5a5a),web moz o ms);
+}
+.#{$p}-img-w {
+  width:100%;
+  max-width:100%;
+  height:auto;
+}
+
+.#{$p}-img-h {
+  height:100%;
+  max-height:100%;
+  width:auto;
+}
+
+@for $i from 0 through 10 {
+  .o#{$i*10} {
+	opacity: $i/10;
+  }
+}
+.dsp-b {
+  display: block !important;
+}
+.dsp-n {
+  display: none !important;
+}
+.bar-margin {
+  margin: 45px auto 0px auto !important;
+}
+.w100 {
+  width: 100% !important;
+}
+.tac {
+  text-align:center !important;
+}
+.clfx {
+  clear:both;
+}

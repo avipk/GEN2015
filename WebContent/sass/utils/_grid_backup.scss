@@ -1,0 +1,75 @@
+@import "functions";
+@import "mixins";
+
+/*------------------------------------------------------*/
+
+.every-col {
+  float: $default-dir;
+}
+
+$media-map: 's','m','l';
+
+@mixin produce_col($col,$gutter,$grid_base) {
+
+  @for $i from 1 through $grid_base {
+	.c#{$i} {
+	  @extend .every-col;
+	  padding-left: $gutter / 2;
+	  padding-right: $gutter / 2;
+	  width: ($col * $i);
+	}
+  }
+
+  .#{$p}-mc {
+	&.p_t, &.p_s {
+	  @for $i from 1 through $grid_base {
+		.c#{$i} {
+		  @extend .every-col;
+		  padding:0! important;
+		  width:100% !important;
+		}
+	  }
+	}
+  }
+
+  .#{$p}-mc {
+	&.p_m, &.p_l {
+	  @for $i from 1 through $grid_base {
+		.c#{$i}-s {
+		  @extend .every-col;
+			padding-left: $gutter / 2 !important;;
+			padding-right: $gutter / 2 !important;;
+			width: ($col * $i) !important;;
+
+		}
+	  }
+	}
+  }
+  .#{$p}-mc.p_m, .#{$p}-mc.p_l, .#{$p}-mc.p_x  {
+	.row {
+	  margin-left: -#{$gutter / 2};
+	  margin-right: -#{$gutter / 2};
+	}
+  }
+
+  .#{$p}-mc.p_t, .#{$p}-mc.p_s {
+	.row {
+		margin-left: 0 !important;
+	  	margin-right: 0 !important;
+	  	padding: 0 15px;
+	  }
+  }
+}
+
+.#{$p}-mc {
+  .row {
+	overflow: hidden;
+  }
+}
+/*------------------------------------------------------*/
+
+$grid_base: 12;
+$gutter: 20px;
+$col: 100% / $grid_base;
+
+@include produce_col($col,$gutter,$grid_base);

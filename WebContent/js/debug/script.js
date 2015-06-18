@@ -266,78 +266,266 @@ var renderer = null;
 $(document).ready(function(){
 	renderer = new Renderer();
 	
-	$('.widget').each(function(){
-		var w = new Widget(this, { mapzoom : 13 });
+	$('.js-widget').each(function(){
+		var w = new Widget(this, { mapzoom : 18,
+								   mapPinsPath : 'images/mappins',
+								   styles : [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}]
+								 });
 			w.init();
 	});
-});
-var Vehicle = function(options){	
-	var vehichle = this;
-	var infowindow = null;
 	
-	this.type = options.type;
+	$('.related').on('click',function(){
+		$('.related').toggleClass('closerelated');
+	}); 
+});
+var VehicleTypes = {
+	'CAR' : { 'name' : 'car', 
+			  'sits' : 5 },
+	'BUS' : { 'name' : 'bus', 
+			  'sits' : 50 }
+};
+
+var Vehicle = function(options){	
+	var vehicle = this;
+	var infowindow = new google.maps.InfoWindow();
+	
+	function animateMerge(vToMerge){
+		var vMergeMarker = vToMerge.marker;
+		var vPos = vehicle.marker.getPosition();		
+		var vMergePos = vMergeMarker.getPosition();
+		var steps = 30;
+		
+		var deltaLat = (vPos.lat() - vMergePos.lat()) / steps;
+		var deltaLng = (vPos.lng() - vMergePos.lng()) / steps;
+		
+		setTimeout( function(){
+			animateMerge2(vMergeMarker, vPos, deltaLat, deltaLng, steps);
+		}, 20);
+		
+	}
+	
+	function animateMerge2(marker, destinationPos, deltaLat, deltaLng, step){
+		var newOriginPos = null;
+		if(step == 0){
+			marker.setMap(null);
+		}else{
+			newPos = new google.maps.LatLng( marker.getPosition().lat() + deltaLat, marker.getPosition().lng() + deltaLng);
+			marker.setPosition(newPos);
+			
+			setTimeout( function(){
+				animateMerge2(marker, destinationPos, deltaLat, deltaLng, (step - 1) );
+			}, 20);
+		}
+	}
+	
+	function getMarkerIcon(){
+		var iconName = vehicle.type.name.toLowerCase(),
+			iconType = 'regular',
+			iconFileName = vehicle.widget.getSettings().mapPinsPath;
+		
+		iconFileName += '/' + iconName + '-' + iconType + '.png';
+		
+		return iconFileName;
+	}
+		
+	function setType(type){
+		vehicle.type = VehicleTypes[ type.toUpperCase() ];
+		if(vehicle.marker){
+			vehicle.marker.setIcon( vehicle.getMarkerIcon() );
+		}
+		
+		return vehicle.type;
+	}
+	
+	this.id = options.id;
+	this.type = setType( options.type );
 	this.model = options.model;
 	this.lnglat = options.lnglat;
 	this.polution = options.polution;
-	this.isOnMyWay = options.isOnMyWay;
+	this.onMyWay = options.onMyWay;
 	this.passengers = options.passengers;
-	this.sits = options.sits;
 	this.widget = options.widget;
 	this.marker = new google.maps.Marker({
 		position : options.lnglat,
-		map : options.widget.getMap()
+		map : options.widget.getMap(),
+		icon : getMarkerIcon()
 	});
 	
-	google.maps.event.addListener(vehichle.marker, 'click', function(){ 
-		if(! infowindow){
-			var html = renderer.render(vehichle,'vehicle-info-template'); // renderer defined in script.js
-			infowindow = new google.maps.InfoWindow();
-			infowindow.setContent(html);
-		}
+	this.getMarkerIcon = function(){
+		return getMarkerIcon();
+	}
+	
+	this.resetMarker = function(){
+		this.marker.setOpacity(1);
+		this.marker.setClickable(true);
+		this.marker.setIcon( getMarkerIcon() );
+	},
+	
+	this.removeFromMap = function(){
+		this.marker.setMap(null); 
+	}
+	
+	this.merge = function(vToMerge){
+		var aviableSits = vehicle.type.sits - vehicle.passengers;
+		var newPassengers = Math.min( vToMerge.passengers, aviableSits );
+		vToMerge.passengers -= newPassengers;
+		vehicle.passengers += newPassengers;
 		
-		infowindow.open(vehichle.widget.getMap(), vehichle.marker);		
+		if(vToMerge.passengers == 0){
+			animateMerge(vToMerge);
+			vehicle.widget.removeVehicleFromMap(vToMerge);
+		}else{
+			vToMerge.marker.setAnimation(google.maps.Animation.BOUNCE);
+			setTimeout(function(){
+				vToMerge.marker.setAnimation(null);
+			}, 700 );
+		}
+	}
+	
+	this.isOnMyWay = function(vehicle){
+		return this.onMyWay;
+	},
+	
+	this.setType = function(type){
+		setType(type);
+	}
+	
+	google.maps.event.addListener(vehicle.marker, 'mouseover', function(){ 
+		var html = null;
+		if(vehicle.widget.getCarPoolingState().active){
+			html = renderer.render(vehicle,'vehicle-carpolling-info-template');
+		}else{
+			html = renderer.render(vehicle,'vehicle-info-template'); // renderer defined in script.js			
+		}
+		infowindow.setContent(html);
+		infowindow.open(vehicle.widget.getMap(), vehicle.marker);		
+	});
+	
+	google.maps.event.addListener(vehicle.marker, 'mouseout', function(){ 
+		infowindow.close();
+	});
+	
+	google.maps.event.addListener(vehicle.marker, 'click', function(){ 
+		if(vehicle.widget.getCarPoolingState().active){
+			vehicle.widget.addVehiclesToCarPool(vehicle);
+		}else if( vehicle.widget.getCommuterSearchState() ) {
+			vehicle.widget.addVehiclesToCommuters(vehicle);
+		}
 	}); 
 }
 var Widget = function(obj, options){
 	var map = null,
 		layers = { 'polutionHeatmap' : new google.maps.visualization.HeatmapLayer({	
-			'radius' : 70, 
-			'opacity' : 1, 
-			'gradient' : [ "rgba(255,255,0,0)", 
-						   "rgba(245,226,10,0)", 
-						   "rgba(245,226,10,0.5)", 
-						   "rgba(255,110,2,0.5)", 
-						   "rgba(255,110,2,1)", 
-						   "rgba(255,110,2,1)", 
-						   "rgba(255,110,2,1)", 
-						   "rgba(185,0,0,1)", 
-						   "rgba(185,0,0,1)", 
-						   "rgba(185,0,0,1)"] 
-		}) },
+														'radius' : 70, 
+														'opacity' : 1, 
+														'gradient' : [ "rgba(255,255,0,0)", 
+																	   "rgba(245,226,10,0)", 
+																	   "rgba(245,226,10,0.5)", 
+																	   "rgba(255,110,2,0.5)", 
+																	   "rgba(255,110,2,1)", 
+																	   "rgba(255,110,2,1)", 
+																	   "rgba(255,110,2,1)", 
+																	   "rgba(185,0,0,1)", 
+																	   "rgba(185,0,0,1)", 
+																	   "rgba(185,0,0,1)"] 
+													}) },
 		carsData = [],
 		dom = obj,
-		settings = options,
+		settings = options,		
+		carpoolstate = { 'active' : false , 'type' : 'car' },
+		commuterSearchState = false,
+		carpool = null,
+		commutersPool = null,
 		that = this;
 		
 	that.api = {
 		init : function(){			
-			map = new google.maps.Map( dom.querySelector('.widget__map'), { 
+			map = new google.maps.Map( dom.querySelector('.js-widget-map'), { 
 				center : this.getUserLocation(),
-				zoom: settings.mapzoom
+				zoom: settings.mapzoom,
+				styles : settings.styles
 			} );			
 			
 			that.api.loadData();
 			
-			// ****  remove this later  *****
-			var heatmap_btn = dom.querySelector('.widget__heatmap-toggle');
+			var heatmap_btn = dom.querySelector('.js-heatmap-toggle');
 			
-			heatmap_btn.addEventListener('click', function(){
-				
+			heatmap_btn.addEventListener('click', function(){				
 				var heatmap = layers['polutionHeatmap'];
 				
 				if(heatmap){
 					heatmap.setMap( heatmap.getMap() ? null : that.api.getMap() );
 				}
+			});
+			
+			
+			
+			
+			
+			
+			// Init Action buttons 
+			var rebreath_btn = $(dom).find('.js-toggle-rebreath-menu');
+			rebreath_btn.click( function(){
+				$('#rebreath-menu').toggleClass('active');
+			} );
+						
+			var simulate_btn = $(dom).find('.js-toggle-simulate-menu');
+			simulate_btn.click( function(){
+				$('#simulate-menu').toggleClass('active');
+				
+				if( $('#simulate-menu').hasClass('active')){					
+					$('#select_number').show();
+				}else{
+					$('#select_number').fadeOut();
+				}
+			} );	
+			
+			var carpooling_btn = $(dom).find('.js-car-pool-toggle');
+			carpooling_btn.click( function(){				
+				carpoolstate.active = ! carpoolstate.active;
+				carpoolstate.type = 'car';
+				$(this).toggleClass('active');
+				
+				if( ! carpoolstate.active ){
+					carpool = null;
+				}
+			});
+			
+			var buspooling_btn = $(dom).find('.js-bus-pool-toggle');
+			buspooling_btn.click( function(){
+				carpoolstate.active = ! carpoolstate.active;
+				carpoolstate.type = 'bus';
+				$(this).toggleClass('active');
+				
+				if( ! carpoolstate.active ){
+					carpool = null;
+				}
+			});
+			
+			var commutersSearchToggle_btn = $(dom).find('.js-commuter-search-toggle');
+			commutersSearchToggle_btn.click( function(){
+				commuterSearchState = ! commuterSearchState;				
+				$(this).toggleClass('active');
+				
+				if(! commuterSearchState){
+					$('#commuters-search-form').hide();
+					for(var i=0; i< carsData.length; i++){
+						carsData[i].resetMarker();
+					}
+				}else{
+					$('#commuters-search-form').show();
+				}								
+			});
+			
+			var commutersSearch_btn = $(dom).find('.js-commuter-search');
+			commutersSearch_btn.click( function(){
+			var from = $('#txtCommuterFrom').val();
+				var to = $('#txtCommuterFrom').val();
+				var time = $('#txtCommuterFrom').val();
+				
+				that.api.searchCommuters(from, to, time);
+				
+				$('#commuters-search-form').fadeOut();
 			});
 		},
 		
@@ -349,15 +537,15 @@ var Widget = function(obj, options){
 		},
 		
 		addVehiclesToMap : function(vehicles){
-			for(var i=0; i<vehicles.length; i++){
+			for(var i=0; i<vehicles.length; i++){				
 				var v = new Vehicle({
+						id : i,
 						type : vehicles[i].type,
 						model : vehicles[i].model,
 						lnglat : new google.maps.LatLng	(vehicles[i].coordinates[1], vehicles[i].coordinates[0]),
 						polution : vehicles[i].polution,
-						isOnMyWay : vehicles[i].isOnMyWay,
+						onMyWay : vehicles[i].onMyWay,
 						passengers : vehicles[i].passengers,
-						sits : vehicles[i].sits,
 						widget : this
 					});
 				
@@ -365,6 +553,39 @@ var Widget = function(obj, options){
 			}
 			
 			that.api.updatePolutionHeatmap(carsData);
+		}, 
+		
+		removeVehicleFromMap : function(vehicle){
+			var indexOfVehicle = carsData.indexOf(vehicle);
+			console.log(indexOfVehicle);
+			if( indexOfVehicle > -1 ){
+				carsData.splice(indexOfVehicle, 1);
+				that.api.updatePolutionHeatmap(carsData);				
+			}
+		},
+		
+		addVehiclesToCarPool : function(vehicle){
+			if(! carpool ){
+				carpool = vehicle;
+				carpool.setType( carpoolstate.type );
+			}else{
+				carpool.merge(vehicle);
+				
+				// End Car pooling
+				if(carpool.passengers === carpool.type.sits){
+					carpool = null;
+					$(dom).find('.js-car-pool-toggle').click();				
+				}
+			}
+		},
+		
+		addVehiclesToCommuters : function(vehicle){
+			if(! commutersPool){
+				commutersPool =[];
+			}
+			
+			commutersPool.push(vehicle);
+			vehicle.marker.setIcon( settings.mapPinsPath + '/commuter.png' );
 		},
 		
 		updatePolutionHeatmap : function(carsData){
@@ -379,8 +600,30 @@ var Widget = function(obj, options){
 			layers['polutionHeatmap'].setData(heatmapData);
 		},
 		
+		searchCommuters: function(origin, destination, datetime){			
+			for( var i=0; i< carsData.length; i++){				
+				if(! carsData[i].isOnMyWay() ){
+					carsData[i].marker.setOpacity(0.2);
+					carsData[i].marker.setClickable(false);
+				}
+			}
+			commutersPool = null; // empty commuters
+		},
+		
 		getMap : function(){
 			return map;			
+		},
+		
+		getSettings : function(){
+			return settings;			
+		},
+		
+		getCarPoolingState : function(){
+			return carpoolstate;
+		},
+		
+		getCommuterSearchState : function(){
+			return commuterSearchState;
 		},
 		
 		loadData : function(){

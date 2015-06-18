@@ -1,184 +1,173 @@
 {
-  "type": "Vehicle Points",
-  "data": [
-    {
-      "type": "Car",
-	  "model" : "Mazda",
-"polution" : 10,
-	  "passengers" : 1,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-      "coordinates": [
-          34.8760986328125,
-          32.117947414055614
-        ]
-    },
-    {
-      "type": "Car",
-	  "model" : "Mazda",
-"polution" : 9,
-	  "passengers" : 1,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-		"coordinates": [
-		  34.874510765075684,
-		  32.11831088716753
-		]
-    },
-    {
-     "type": "Car",
-	  "model" : "Mazda",
-"polution" : 8,
-	  "passengers" : 3,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87356662750244,
-          32.118674358832024
-        ]
-      
-    },
-    {
-      "type": "Car",
-"model" : "Mazda",
-"polution" : 6,
-	  "passengers" : 2,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87266540527344,
-          32.11896513512143
-        ]
-     
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 8,
-	  "passengers" : 4,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.871764183044434,
-          32.11932860418048
-        ]
-      
-    },
-    {
-      "type": "Car",
-"model" : "Mazda",
-"polution" : 10,
-	  "passengers" : 1,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87082004547119,
-          32.11958303166058
-        ]
-      
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 9,
-	  "passengers" : 2,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87107753753662,
-          32.11956485829265
-        ]
-     
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 6,
-	  "passengers" : 3,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.871206283569336,
-          32.119483078092266
-        ]
-     
-    },
-    {
-      "type": "Car",
-"model" : "Mazda",
-"polution" : 8,
-	  "passengers" : 5,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87135648727417,
-          32.11946490470446
-        ]
-     
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 7,
-	  "passengers" : 4,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87152814865112,
-          32.119410384519284
-        ]
-      
-    },
-    {
-      "type": "Car",
-"model" : "Mazda",
-"polution" : 9,
-	  "passengers" : 1,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.872010946273804,
-          32.11917413000726
-        ]
-      
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 10,
-	  "passengers" : 2,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.87216114997864,
-          32.11914686983188
-        ]
-      
-    },
-    {
-      "type": "Bus",
-"model" : "Mazda",
-"polution" : 8,
-	  "passengers" : 10,
-	  "isOnMyWay" : true,
-	  "sits" : 50,
-        "coordinates": [
-          34.87233281135559,
-          32.11906508925696
-        ]
-     
-    },
-    {
-     "type": "Car",
-"model" : "Mazda",
-"polution" : 7,
-	  "passengers" : 1,
-	  "isOnMyWay" : true,
-	  "sits" : 5,
-        "coordinates": [
-          34.872493743896484,
-          32.11900148209248
-        ]      
-    }
-  ]
+    "type": "Vehicle Points",
+    "data": [
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 10,
+            "passengers": 1,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.8760986328125,
+                32.117947414055614
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 9,
+            "passengers": 1,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.874510765075684,
+                32.11831088716753
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 8,
+            "passengers": 3,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.87356662750244,
+                32.118674358832024
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 6,
+            "passengers": 2,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.87266540527344,
+                32.11896513512143
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 8,
+            "passengers": 4,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.871764183044434,
+                32.11932860418048
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 10,
+            "passengers": 1,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.87082004547119,
+                32.11958303166058
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 9,
+            "passengers": 2,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.87107753753662,
+                32.11956485829265
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 6,
+            "passengers": 3,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.871206283569336,
+                32.119483078092266
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 8,
+            "passengers": 5,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.87135648727417,
+                32.11946490470446
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 7,
+            "passengers": 4,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.87152814865112,
+                32.119410384519284
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 9,
+            "passengers": 1,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.872010946273804,
+                32.11917413000726
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 10,
+            "passengers": 2,
+            "onMyWay": false,
+           
+            "coordinates": [
+                34.87216114997864,
+                32.11914686983188
+            ]
+        },
+        {
+            "type": "Bus",
+            "model": "Mazda",
+            "polution": 4,
+            "passengers": 10,
+            "onMyWay": false,
+            
+            "coordinates": [
+                34.87233281135559,
+                32.11906508925696
+            ]
+        },
+        {
+            "type": "Car",
+            "model": "Mazda",
+            "polution": 7,
+            "passengers": 1,
+            "onMyWay": true,
+           
+            "coordinates": [
+                34.872493743896484,
+                32.11900148209248
+            ]
+        }
+    ]
 }

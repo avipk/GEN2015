@@ -1,0 +1,44 @@
+.#{$p}-vale {
+  display:none;
+  top:0;
+  left:0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:rgba(255,255,255,0.95);
+  overflow:hidden;
+  transition: opacity 0.25s ease-in-out;
+ .vale_group {
+   position:absolute;
+   left:50%;
+   top:50%;
+   @include prefix((transform: translate(-50%, -50%)), os moz webkit ms );
+	text-align:center;
+	width:60%;
+
+   img {
+	width:75px;
+	height:auto;
+   }
+   .progress {
+	position:relative;
+	transition:all 0.15s ease-in-out;
+	height:10px;
+	width:100%;
+	background: $lighter-gray;
+	margin-bottom:10px;
+	 .barp {
+       transition: all 0.25s ease-in-out;
+	   height:100%;
+	   width:0%;
+	   position:absolute;
+	   #{$default-dir}:0;
+	   top:0;
+	   background: $main-color;
+	 }
+   }
+   span {
+
+   }
+ }
+}

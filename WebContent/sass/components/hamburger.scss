@@ -1,0 +1,111 @@
+$button-width: 44px;
+$button-height: 42px;
+$bar-thickness: 4px;
+$button-pad: 12px;
+$button-trans-delay: 0.3s;
+
+.cmn-toggle-switch {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: $button-width;
+  height: $button-height;
+  font-size: 0;
+  text-indent: -9999px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  border: none;
+  cursor: pointer;
+  transition: background $button-trans-delay;
+}
+
+.cmn-toggle-switch:focus {
+  outline: 1px dashed;
+}
+
+.cmn-toggle-switch span {
+  display: block;
+  position: absolute;
+  top: ($button-height / 2) - ($bar-thickness / 2);
+  left: $button-pad;
+  right: $button-pad;
+  height: $bar-thickness;
+  background: $main-color;
+}
+
+.cmn-toggle-switch span::before,
+.cmn-toggle-switch span::after {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 100%;
+  height: $bar-thickness;
+  background-color: $main-color;
+  content: "";
+}
+
+.cmn-toggle-switch span::before {
+  top: -(($button-height / 2) - ($bar-thickness / 2) - $button-pad);
+}
+
+.cmn-toggle-switch span::after {
+  bottom: -(($button-height / 2) - ($bar-thickness / 2) - $button-pad);
+}
+
+
+/*--X--*/
+
+.cmn-toggle-switch__htx {
+  background-color: $white;
+}
+
+.cmn-toggle-switch__htx span {
+  transition: background 0 $button-trans-delay;
+}
+
+.cmn-toggle-switch__htx span::before,
+.cmn-toggle-switch__htx span::after {
+  transition-duration: $button-trans-delay, $button-trans-delay;
+  transition-delay: $button-trans-delay, 0;
+}
+
+.cmn-toggle-switch__htx span::before {
+  transition-property: top, transform;
+}
+
+.cmn-toggle-switch__htx span::after {
+  transition-property: bottom, transform;
+}
+
+/* active state, i.e. menu open */
+
+.cmn-toggle-switch__htx.active {
+  background-color: $dark-gray;
+  color: $white;
+}
+
+.cmn-toggle-switch__htx.active span {
+  background: none;
+}
+
+.cmn-toggle-switch__htx.active span::before {
+  top: 0;
+  transform: rotate(45deg);
+  background: $white;
+}
+
+.cmn-toggle-switch__htx.active span::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+  background: $white;
+}
+
+.cmn-toggle-switch__htx.active span::before,
+.cmn-toggle-switch__htx.active span::after {
+  transition-delay: 0, $button-trans-delay;
+}

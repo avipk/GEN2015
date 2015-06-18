@@ -1,0 +1,26 @@
+// --------------------------------------------------
+//   $DOMAINS
+//
+//   heb -> haaretz.co.il
+//	 eng -> haaretz.com
+//   tm -> themarker.com
+//
+// --------------------------------------------------
+//
+//  Automatic Settings & Variables - DO NOT EDIT!
+//
+// -------------------------------------------------
+
+$settings: setDomain($domain);
+$main-color: nth($settings,1) !global;
+$default-dir: nth($settings,2) !global;
+$opposite-dir: nth($settings,3) !global;
+$default-flow: nth($settings,4) !global;
+$opposite-flow: nth($settings,5) !global;
+$main-font: nth($settings,6) !global;
+
+
+
+
+
+
